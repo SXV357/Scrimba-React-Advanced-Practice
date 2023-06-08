@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import './style.css';
 import PropControls from './PropControls';
 import { withIncrementer } from './withIncrementer';
+import Render from './Render';
 
 function App({current, increment, decrement}) {
   return (
@@ -18,6 +19,22 @@ function App({current, increment, decrement}) {
         <button onClick = {increment}>Increment</button>
         <button onClick = {decrement}>Decrement</button>
       </PropControls>
+
+      <Render renderProps = {(string, convert) => {
+        // a function is passed down as props to a child component and the child determines what is rendered.
+        let reversed = "";
+        for (let i = string.length - 1; i >= 0; i--){
+          reversed += string[i];
+        }
+        return (
+          <>
+            <h1>{`Original String: ${convert ? string.toUpperCase() : string.toLowerCase()}`}</h1>
+            <h1>{`Reversed String: ${convert ? reversed.toUpperCase() : reversed.toLowerCase()}`}</h1>
+          </>
+        )
+      }}/>
+
+
     </Fragment>
   );
 }
