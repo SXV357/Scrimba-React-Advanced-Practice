@@ -5,6 +5,17 @@ export default class Counter extends Component {
         count: this.props.startingValue
     }
 
+    shouldComponentUpdate(nextProps, nextState){
+        if (nextState.count === this.state.count){
+            return false;
+        }
+        return true;
+    }
+
+    componentDidUpdate(){
+        console.log("Counter component just updated");
+    }
+
     static defaultProps = {
         startingValue: 0
     }
@@ -21,11 +32,17 @@ export default class Counter extends Component {
         })
     }
 
+    powerUp = () => {
+        this.setState(prevState => {
+            return {count: prevState.count * 2}
+        })
+    }
+
     // Non-HOC implementation(using render props)
     render(){
         return (
             <>
-                {this.props.children(this.state.count, this.increment, this.decrement)}
+                {this.props.children(this.state.count, this.increment, this.decrement, this.powerUp)}
             </>
         )
     }

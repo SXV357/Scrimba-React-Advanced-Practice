@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import './style.css';
 import PropControls from './PropControls';
 // import { withIncrementer } from './withIncrementer';
@@ -6,7 +6,9 @@ import Render from './Render';
 import DataFetcher from './DataFetcher';
 import Counter from './Counter';
 
-function App({current, increment, decrement}) {
+function App() {
+  const [customCount, setCustomCount] = useState(1);
+
   return (
     <Fragment>
       <PropControls width = {200} height = {200} color = "red">
@@ -17,12 +19,13 @@ function App({current, increment, decrement}) {
         <figcaption>Random Image</figcaption>
       </PropControls>
 
-      <Counter startingValue = {1}>
-        {(count, increase, decrease) => (
+      <Counter startingValue = {customCount}>
+        {(count, increase, decrease, powerUp) => (
           <>
-          <div>Current Count: {count}</div>
-          <button onClick = {increase}>Increment</button>
-          <button onClick = {decrease}>Decrement</button>
+            <div>Current Count: {count}</div>
+            <button onClick = {increase}>Increment</button>
+            <button onClick = {decrease}>Decrement</button>
+            <button onClick = {powerUp}>Power Up</button>
           </>
         )}
       </Counter>
@@ -49,7 +52,7 @@ function App({current, increment, decrement}) {
 
       <DataFetcher url="https://swapi.dev/api/people/1/">
         {(obj) => (
-          obj.isLoading && obj.err == null ? <h1>Loading...</h1> : <p>{JSON.stringify(data)}</p>
+          obj.isLoading && obj.err == null ? <h1>Loading...</h1> : <p>{JSON.stringify(obj.meta)}</p>
         )}
       </DataFetcher>
 
