@@ -5,9 +5,18 @@ import PropControls from './PropControls';
 import Render from './Render';
 import DataFetcher from './DataFetcher';
 import Counter from './Counter';
+import GrandParent from './Optimization Testing/GrandParent';
 
 function App() {
+  // eslint-disable-next-line
+  const [counterVal, setCounterVal] = useState(1);
   const [customCount, setCustomCount] = useState(1);
+
+  const manipulateCustomCount = () => {
+    setCustomCount(prevCount => prevCount + 5)
+  }
+
+  console.log("App was rendered");
 
   return (
     <Fragment>
@@ -19,7 +28,7 @@ function App() {
         <figcaption>Random Image</figcaption>
       </PropControls>
 
-      <Counter startingValue = {customCount}>
+      <Counter startingValue = {counterVal}>
         {(count, increase, decrease, powerUp) => (
           <>
             <div>Current Count: {count}</div>
@@ -55,6 +64,12 @@ function App() {
           obj.isLoading && obj.err == null ? <h1>Loading...</h1> : <p>{JSON.stringify(obj.meta)}</p>
         )}
       </DataFetcher>
+
+      <div>Custom Count: {customCount}</div>
+      <button onClick = {manipulateCustomCount}>Modify Custom Count</button>
+
+      <GrandParent customCount = {customCount}/>
+      <GrandParent customCount = {customCount}/>
 
     </Fragment>
   );
