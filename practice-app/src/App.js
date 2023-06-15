@@ -10,13 +10,13 @@ import GrandParent from './Optimization Testing/GrandParent';
 function App() {
   // eslint-disable-next-line
   const [counterVal, setCounterVal] = useState(1);
-  const [customCount, setCustomCount] = useState(1);
+  // const [customCount, setCustomCount] = useState(1);
 
-  const manipulateCustomCount = () => {
-    setCustomCount(prevCount => prevCount + 5)
-  }
+  // const manipulateCustomCount = () => {
+  //   setCustomCount(prevCount => prevCount + 5)
+  // }
 
-  console.log("App was rendered");
+  // console.log("App was rendered");
 
   return (
     <Fragment>
@@ -29,12 +29,13 @@ function App() {
       </PropControls>
 
       <Counter startingValue = {counterVal}>
-        {(count, increase, decrease, powerUp) => (
+        {(count, increase, decrease, powerUp, shouldReset, reset) => (
           <>
             <div>Current Count: {count}</div>
             <button onClick = {increase}>Increment</button>
             <button onClick = {decrease}>Decrement</button>
             <button onClick = {powerUp}>Power Up</button>
+            {shouldReset && <button onClick = {reset}>Reset Value</button>}
           </>
         )}
       </Counter>
@@ -65,14 +66,16 @@ function App() {
         )}
       </DataFetcher>
 
-      <div>Custom Count: {customCount}</div>
+      {/* <div>Custom Count: {customCount}</div>
       <button onClick = {manipulateCustomCount}>Modify Custom Count</button>
 
       <GrandParent customCount = {customCount}/>
-      <GrandParent customCount = {customCount}/>
+      <GrandParent customCount = {customCount}/> */}
 
     </Fragment>
   );
 }
 
+// if props weren't passed to each grandparent component then when state changes in app,
+  // only app will get re-rendered but with props passed, only app and each grandparent component will get re-rendered and nothing else
 export default App
