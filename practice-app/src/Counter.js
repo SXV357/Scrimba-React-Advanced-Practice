@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import NewContext from './Context';
+// import {NewContext} from './Context';
 import PropTypes from 'prop-types';
 
 export default class Counter extends Component {
@@ -19,7 +19,7 @@ export default class Counter extends Component {
     // }
 
     // state that we want to access the context we created in this class component
-    static contextType = NewContext;
+    // static contextType = NewContext;
     static defaultProps = {startingValue: 0}
     static propTypes = {startingValue: PropTypes.number.isRequired}
 
@@ -49,8 +49,9 @@ export default class Counter extends Component {
         // console.log(this.context);
         return (
             <>
-                {this.context ? this.props.children(this.state.count, this.increment, this.decrement, this.powerUp, this.context, this.reset) : <div>{"Not able to render children. Please modify the context value and try again."}</div>}
-            </>
+                {/* {this.context ? this.props.children(this.state.count, this.increment, this.decrement, this.powerUp, this.context, this.reset) : <div>{"Not able to render children. Please modify the context value and try again."}</div>} */}
+{                this.props.children(this.state.count, this.increment, this.decrement, this.powerUp, this.reset)
+}            </>
         )
     }
 

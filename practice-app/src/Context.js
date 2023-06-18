@@ -1,4 +1,4 @@
 import {createContext} from "react"
 
-const NewContext = createContext();
-export default NewContext;
+export const NewContext = createContext();
+export const LightContext = createContext();

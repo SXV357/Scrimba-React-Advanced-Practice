@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react"
 
 // functional component version
-export default function DataFetcher({url, children}){
+export default function DataFetcher({url, children, style}){
     const [load, setLoad] = useState({loading: false, data: null, errorMessage: null})
 
     useEffect(() => {
@@ -17,9 +17,9 @@ export default function DataFetcher({url, children}){
     }, [])
 
     return (
-        <> 
+        <div className = {`${style}-theme`}> 
             {children({meta: load.data, isLoading: load.loading, err: load.errorMessage})}
-        </>
+        </div>
     )
 }
 
