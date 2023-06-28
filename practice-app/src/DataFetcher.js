@@ -14,7 +14,7 @@ export default function DataFetcher({url, children, style}){
         catch {
             setLoad({...load, loading: false, errorMessage: "There was an error when fetching the data."})
         }  
-    }, [])
+    }, [load, url])
 
     return (
         <div className = {`${style}-theme`}> 

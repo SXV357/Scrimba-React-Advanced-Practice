@@ -7,6 +7,7 @@ import DataFetcher from './DataFetcher';
 import Counter from './Counter';
 // import GrandParent from './Optimization Testing/GrandParent';
 import { LightContext } from './Context';
+import { Link, Route, Switch } from "react-router-dom";
 
 
 // Context.Consumer and using render props to access the value is the legacy way of doing it
@@ -22,7 +23,7 @@ function App() {
   // }
 
   // console.log("App was rendered");
-  const theme = useContext(LightContext);
+  const theme = useContext(LightContext); // using the custom hook instead of render props
 
   return (
     <div> 
@@ -53,19 +54,33 @@ function App() {
       <button onClick = {decrement}>Decrement</button>
     </PropControls> */}
 
-    <Render renderProps = {(string, convert) => {
-      // a function is passed down as props to a child component and the child determines what is rendered.
-      let reversed = "";
-      for (let i = string.length - 1; i >= 0; i--){
-        reversed += string[i];
-      }
-      return (
-        <>
-          <h1>{`Original String: ${convert ? string.toUpperCase() : string.toLowerCase()}`}</h1>
-          <h1>{`Reversed String: ${convert ? reversed.toUpperCase() : reversed.toLowerCase()}`}</h1>
-        </>
-      )
-    }}/>
+    <Link to = "/datafetcher">Data Fetcher Component</Link>
+    <Link to = "/stringrender">Render Props String Manipulation Component</Link>
+
+    <Switch>
+      <Route path = "/stringrender">
+        <Render renderProps = {(string, convert) => {
+          // a function is passed down as props to a child component and the child determines what is rendered.
+          let reversed = "";
+          for (let i = string.length - 1; i >= 0; i--){
+            reversed += string[i];
+          }
+          return (
+            <>
+              <h1>{`Original String: ${convert ? string.toUpperCase() : string.toLowerCase()}`}</h1>
+              <h1>{`Reversed String: ${convert ? reversed.toUpperCase() : reversed.toLowerCase()}`}</h1>
+            </>
+          )
+        }}/>
+      </Route>
+      <Route path = "/datafetcher">
+        <DataFetcher url="https://swapi.dev/api/people/1/" style = {theme}>
+            {(obj) => (
+              obj.isLoading && obj.err == null ? <h1>Loading...</h1> : <p>{JSON.stringify(obj.meta)}</p>
+            )}
+        </DataFetcher> 
+      </Route>
+    </Switch>
 
     {/* <LightContext.Consumer>
       {theme => (
@@ -76,12 +91,6 @@ function App() {
       </DataFetcher>
       )}
     </LightContext.Consumer> */}
-
-    <DataFetcher url="https://swapi.dev/api/people/1/" style = {theme}>
-    {(obj) => (
-      obj.isLoading && obj.err == null ? <h1>Loading...</h1> : <p>{JSON.stringify(obj.meta)}</p>
-    )}
-    </DataFetcher>
 
 
     {/* <div>Custom Count: {customCount}</div>
